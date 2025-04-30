@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recruiting Capacity Calculator</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            line-height: 1.6;
+            margin: 20px;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        .container {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            max-width: 800px;
+            margin: auto;
+        }
+        h1, h2 {
+            color: #555;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        select, input[type="number"] {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        .role-profile {
+            border: 1px dashed #ddd;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            background-color: #fafafa;
+        }
+        .role-profile h3 {
+            margin-top: 0;
+            color: #666;
+        }
+        button {
+            background-color: #5cb85c;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-right: 10px;
+        }
+        button:hover {
+            background-color: #4cae4c;
+        }
+        #add-role-btn {
+            background-color: #4682B4;
+        }
+        #add-role-btn:hover {
+             background-color: #4073a0;
+        }
+        .remove-role-btn {
+            background-color: #d9534f;
+            font-size: 12px;
+            padding: 5px 10px;
+            float: right;
+        }
+        .remove-role-btn:hover {
+             background-color: #c9302c;
+        }
+        #result {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #e9f5e9;
+            border: 1px solid #d0e9d0;
+            border-radius: 5px;
+            font-size: 1.1em;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Recruiting Capacity Calculator</h1>
+
+        <div id="role-profiles-container">
+            <h2>Role Profiles</h2>
+            <!-- Role profiles will be added here -->
+        </div>
+        <button id="add-role-btn" type="button">Add Role Profile</button>
+
+        <h2>Company & Process Factors</h2>
+
+        <label for="company-stage">Company Stage:</label>
+        <select id="company-stage">
+            <option value="growth">Growth Stage (Series B/C)</option>
+            <option value="early">Early Stage (Seed/Series A)</option>
+            <option value="enterprise">Enterprise / Late Stage</option>
+        </select>
+
+        <label for="compensation-strategy">Compensation Strategy (vs. Market):</label>
+        <select id="compensation-strategy">
+            <option value="90plus">&gt;90th Percentile</option>
+            <option value="75to90">75th-90th Percentile</option>
+            <option value="50to75">50th-75th Percentile</option>
+            <option value="below50">&lt;50th Percentile</option>
+        </select>
+
+        <label for="hiring-bar">Hiring Bar / Expectation Level:</label>
+        <select id="hiring-bar">
+            <option value="market">Market Aligned / Reasonable</option>
+            <option value="high">High Bar / Top ~10% Target</option>
+            <option value="very_high">Very High Bar / Top ~1% Target</option>
+            <option value="exceptional">Exceptional / "Unicorn" Expectations</option>
+        </select>
+
+        <label for="automation-tools">Using Significant Automation Tools (AI Screening, Scheduling, etc.)?</label>
+        <select id="automation-tools">
+            <option value="no">No</option>
+            <option value="yes">Yes</option>
+        </select>
+
+        <label for="recruiting-model">Recruiting Model:</label>
+        <select id="recruiting-model">
+            <option value="full-cycle">Full-Cycle Recruiters</option>
+            <option value="split">Split Team (Sourcer / Recruiter)</option>
+            <!-- Option for Agency/RPO might be complex to model directly, focusing on internal FTE -->
+        </select>
+
+        <button id="calculate-btn" type="button">Calculate FTE</button>
+
+        <div id="result"></div>
+    </div>
+
+    <script src="calculator.js"></script>
+</body>
+</html> 
