@@ -13,7 +13,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const MONTHLY_RECRUITER_CAPACITY = 128; // hours
     const TIME_PER_CV_REVIEW = 0.02; // hours (1.2 minutes)
     const SOURCING_EFFORT_CV_REVIEW_PERCENTAGE = 0.40; // Assumption: 40% of sourcing block is CV review
-    let roleProfileCount = 0;
 
     const multipliers = {
         roleType: {
@@ -57,50 +56,24 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     function addRoleProfile() {
-        roleProfileCount++;
-        const profileDiv = document.createElement('div');
-        profileDiv.classList.add('role-profile');
-        profileDiv.setAttribute('id', `role-profile-${roleProfileCount}`);
-        profileDiv.innerHTML = `
-            <h3>Role Profile ${roleProfileCount} <button type="button" class="remove-role-btn">Remove</button></h3>
-            <label for="hires-${roleProfileCount}">Monthly Hires Needed:</label>
-            <input type="number" id="hires-${roleProfileCount}" value="1" min="0">
-
-            <label for="role-type-${roleProfileCount}">Role Type:</label>
-            <select id="role-type-${roleProfileCount}">
-                <option value="gtm">GTM (Sales, Marketing, CS)</option>
-                <option value="ops">Ops / Support / Admin</option>
-                <option value="eng">Engineering / Product / Design</option>
-                <option value="spec">Specialized / Niche / Research</option>
-            </select>
-
-            <label for="seniority-${roleProfileCount}">Seniority:</label>
-            <select id="seniority-${roleProfileCount}">
-                <option value="junior">Junior (0-2 YoE)</option>
-                <option value="mid">Mid-Level (2-5 YoE)</option>
-                <option value="senior">Senior (5-8 YoE)</option>
-                <option value="lead">Lead / Staff (8-12 YoE)</option>
-                <option value="princ">Principal / Sr. Staff (12+ YoE)</option>
-                <option value="exec">Executive (Director+)</option>
-            </select>
-
-            <label for="location-${roleProfileCount}">Location Constraints:</label>
-            <select id="location-${roleProfileCount}">
-                <option value="remote_tz">Remote (Timezone-constrained)</option>
-                <option value="remote_global">Remote (Global)</option>
-                <option value="hybrid">Hybrid (Hub Required)</option>
-                <option value="country">Single Country (Non-Hub)</option>
-                <option value="city">Single City / Hub</option>
-            </select>
-        `;
+        const template = document.getElementById('role-profile-template');
+        const profileDiv = template.content.cloneNode(true).firstElementChild;
 
         // Add remove button functionality
         profileDiv.querySelector('.remove-role-btn').addEventListener('click', () => {
             profileDiv.remove();
-            // Optional: Renumber profiles if needed, but simpler not to for now
+            renumberRoleProfiles();
         });
 
         roleProfilesContainer.appendChild(profileDiv);
+        renumberRoleProfiles();
+    }
+
+    function renumberRoleProfiles() {
+        const profiles = roleProfilesContainer.querySelectorAll('.role-profile');
+        profiles.forEach((profile, index) => {
+            profile.querySelector('.role-number').textContent = index + 1;
+        });
     }
 
     function calculateFTE() {
@@ -121,11 +94,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         profiles.forEach(profile => {
-            const idSuffix = profile.id.split('-').pop(); // Get the unique ID number
-            const hires = parseFloat(document.getElementById(`hires-${idSuffix}`).value) || 0;
-            const roleType = document.getElementById(`role-type-${idSuffix}`).value;
-            const seniority = document.getElementById(`seniority-${idSuffix}`).value;
-            const location = document.getElementById(`location-${idSuffix}`).value;
+            const hires = parseFloat(profile.querySelector('.hires-input').value) ?? 0;
+            const roleType = profile.querySelector('.role-type-select').value;
+            const seniority = profile.querySelector('.seniority-select').value;
+            const location = profile.querySelector('.location-select').value;
 
             if (hires <= 0) return; // Skip profiles with no hires
 
