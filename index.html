@@ -96,6 +96,46 @@
             <h2>Role Profiles</h2>
             <!-- Role profiles will be added here -->
         </div>
+
+        <template id="role-profile-template">
+            <div class="role-profile">
+                <h3>Role Profile <span class="role-number"></span> <button type="button" class="remove-role-btn">Remove</button></h3>
+                
+                <label>Monthly Hires Needed:
+                    <input type="number" class="hires-input" value="1" min="0">
+                </label>
+
+                <label>Role Type:
+                    <select class="role-type-select">
+                        <option value="gtm">GTM (Sales, Marketing, CS)</option>
+                        <option value="ops">Ops / Support / Admin</option>
+                        <option value="eng">Engineering / Product / Design</option>
+                        <option value="spec">Specialized / Niche / Research</option>
+                    </select>
+                </label>
+
+                <label>Seniority:
+                    <select class="seniority-select">
+                        <option value="junior">Junior (0-2 YoE)</option>
+                        <option value="mid">Mid-Level (2-5 YoE)</option>
+                        <option value="senior">Senior (5-8 YoE)</option>
+                        <option value="lead">Lead / Staff (8-12 YoE)</option>
+                        <option value="princ">Principal / Sr. Staff (12+ YoE)</option>
+                        <option value="exec">Executive (Director+)</option>
+                    </select>
+                </label>
+
+                <label>Location Constraints:
+                    <select class="location-select">
+                        <option value="remote_tz">Remote (Timezone-constrained)</option>
+                        <option value="remote_global">Remote (Global)</option>
+                        <option value="hybrid">Hybrid (Hub Required)</option>
+                        <option value="country">Single Country (Non-Hub)</option>
+                        <option value="city">Single City / Hub</option>
+                    </select>
+                </label>
+            </div>
+        </template>
         <button id="add-role-btn" type="button">Add Role Profile</button>
 
         <h2>Company & Process Factors</h2>
